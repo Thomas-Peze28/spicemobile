@@ -159,7 +159,7 @@ de développement. Le serveur écoute sur tout le réseau local : ne le lance pa
 
 ## Développement
 
-Prérequis : Node.js 20.11 ou plus récent.
+Prérequis : Node.js 22.22.2 ou 24.15 et plus récent.
 
 ```bash
 npm install

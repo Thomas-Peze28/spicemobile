@@ -16,7 +16,7 @@ SpiceMobile agit **uniquement sur le DOM et le CSS** du lecteur web.
 
 ## Environnement
 
-Node.js 20.11 ou plus récent (voir `.nvmrc`).
+Node.js 22.22.2 ou 24.15 et plus récent (voir `.nvmrc`).
 
 ```bash
 npm install
