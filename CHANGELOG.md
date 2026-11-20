@@ -7,6 +7,21 @@ et le projet respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [0.2.5] - 2026-11-20
+
+### Corrigé
+
+D'après le diagnostic de la vraie page (Firefox Android) :
+
+- Barre de lecture cachée sous la barre du bas : Spotify impose une hauteur minimale
+  à sa grille, qui annulait la limite de SpiceMobile (`min-height: 0` forcé).
+- Boutons de lecture et progression invisibles (colonne centrale à 0 px) :
+  `now-playing-widget` n'existe plus. La rangée de la barre de lecture est maintenant
+  trouvée à partir du bouton lecture, sans ce repère.
+- Barre du haut de Spotify masquée : une fois masquée, elle mesurait 0 et n'était plus
+  reconnue. Elle est maintenant reconnue à son contenu (liens, boutons), après le contenu
+  principal (`<main>` ou `#main-view`).
+
 ## [0.2.4] - 2026-11-20
 
 ### Corrigé
@@ -98,7 +113,8 @@ Version initiale, distribuée hors GitHub Releases.
 - Swipe sur la barre de lecture : gauche = suivant, droite = précédent.
 - Bascule vue mobile / vue PC, mémorisée dans `localStorage`.
 
-[Unreleased]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.4...HEAD
+[Unreleased]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.5...HEAD
+[0.2.5]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.4...v0.2.5
 [0.2.4]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.1...v0.2.2

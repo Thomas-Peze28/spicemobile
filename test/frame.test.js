@@ -156,3 +156,44 @@ describe('diagnostic', () => {
     expect(buildDiagnostic()).toContain('SpiceMobile');
   });
 });
+
+describe('structure réelle (diagnostic v0.2.4)', () => {
+  it('retrouve une barre du haut déjà masquée (taille 0)', async () => {
+    const { classifyAreas } = await import('../src/frame.js');
+    document.body.innerHTML = `
+      <div id="g">
+        <div id="Desktop_LeftSidebar_Id"></div>
+        <div id="pl"><button data-testid="control-button-playpause"></button></div>
+        <div id="main-view"><main></main></div>
+        <div id="hdr" class="sm-area-hidden"><button>Accueil</button></div>
+        <div id="rs"></div>
+      </div>`;
+    const roles = classifyAreas(document.getElementById('g'), () => ({
+      top: 0,
+      width: 0,
+      height: 0,
+    }));
+    const role = (id) => roles.get(document.getElementById(id));
+    expect(role('main-view')).toBe('main');
+    expect(role('hdr')).toBe('header');
+    expect(role('rs')).toBe('hidden');
+    expect(role('pl')).toBe('player');
+  });
+
+  it('tagPlayer sans now-playing-widget', async () => {
+    const { tagPlayer } = await import('../src/frame.js');
+    document.body.innerHTML = `
+      <aside data-testid="now-playing-bar">
+        <div id="row">
+          <div id="l">Titre</div>
+          <div id="c"><div data-testid="player-controls"><button data-testid="control-button-playpause"></button></div></div>
+          <div id="r"><div data-testid="volume-bar"></div></div>
+        </div>
+      </aside>`;
+    expect(tagPlayer()).toBe(true);
+    expect(document.getElementById('row').className).toBe('sm-player-row');
+    expect(document.getElementById('l').className).toBe('sm-player-left');
+    expect(document.getElementById('c').className).toBe('sm-player-center');
+    expect(document.getElementById('r').className).toBe('sm-player-extra');
+  });
+});
