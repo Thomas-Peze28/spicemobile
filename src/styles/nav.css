@@ -55,3 +55,45 @@ html.sm-on #sm-nav {
 html.sm-on #sm-fab {
   display: none;
 }
+
+/* Panneau de diagnostic (appui long sur « Vue PC »). */
+#sm-diag {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  box-sizing: border-box;
+  background: #000;
+}
+#sm-diag > div {
+  display: flex;
+  gap: 8px;
+}
+#sm-diag button {
+  flex: 1;
+  min-height: 44px;
+  border: 0;
+  border-radius: 22px;
+  background: #1ed760;
+  color: #000;
+  font:
+    700 14px system-ui,
+    sans-serif;
+}
+#sm-diag button + button {
+  background: #333;
+  color: #fff;
+}
+#sm-diag textarea {
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+  background: #121212;
+  color: #ddd;
+  border: 1px solid #333;
+  font: 10px/1.3 monospace;
+  white-space: pre;
+}

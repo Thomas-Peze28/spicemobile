@@ -122,3 +122,37 @@ describe('findExternalHeader', () => {
     expect(findExternalHeader(document.getElementById('grid'), rect)).toBeNull();
   });
 });
+
+describe('éléments SpiceMobile et barre de lecture hors grille', () => {
+  it('ignore la barre du bas SpiceMobile comme barre du haut', async () => {
+    const { findExternalHeader } = await import('../src/frame.js');
+    document.body.innerHTML = `<nav id="sm-nav"><button>x</button></nav><div id="grid"></div>`;
+    const rect = () => ({ top: 0, width: 400, height: 56 });
+    expect(findExternalHeader(document.getElementById('grid'), rect)).toBeNull();
+  });
+
+  it('trouve la barre de lecture placée après la grille', async () => {
+    const { findExternalPlayer } = await import('../src/frame.js');
+    document.body.innerHTML = `
+      <div id="root">
+        <div id="grid"><nav id="Desktop_LeftSidebar_Id"></nav></div>
+        <aside id="bar"><footer><button data-testid="control-button-playpause"></button></footer></aside>
+      </div>`;
+    expect(findExternalPlayer(document.getElementById('grid'))?.id).toBe('bar');
+  });
+
+  it('pas de barre externe si le bouton lecture est dans la grille', async () => {
+    const { findExternalPlayer } = await import('../src/frame.js');
+    document.body.innerHTML = `<div id="grid"><button data-testid="control-button-playpause"></button></div>`;
+    expect(findExternalPlayer(document.getElementById('grid'))).toBeNull();
+  });
+});
+
+describe('diagnostic', () => {
+  it('décrit les éléments et produit un texte', async () => {
+    const { describe: describeEl, buildDiagnostic } = await import('../src/diag.js');
+    document.body.innerHTML = `<div id="x" class="a b" data-testid="t" aria-label="Lecture"></div>`;
+    expect(describeEl(document.getElementById('x'))).toBe('div#x.a.b[tid=t][aria=Lecture]');
+    expect(buildDiagnostic()).toContain('SpiceMobile');
+  });
+});
