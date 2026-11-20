@@ -9,6 +9,7 @@ import { VERSION } from './config.js';
 import { onDomReady } from './dom.js';
 import { setupDrawer } from './drawer.js';
 import { EVENTS, on } from './events.js';
+import { setupFrame } from './frame.js';
 import { runHealthCheck } from './health.js';
 import { patchHistory } from './history.js';
 import { log } from './log.js';
@@ -39,6 +40,8 @@ function init() {
     viewport.sync();
     viewport.watch();
     on(EVENTS.mode, () => viewport.sync());
+    const frame = setupFrame();
+    on(EVENTS.mode, () => frame.refresh());
     buildNav();
     buildFab();
     updateActive();
