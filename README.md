@@ -40,6 +40,8 @@ SpiceMobile ne touche pas à ça : son seul rôle est l'**interface mobile**.
   vers la droite pour le précédent. La barre de progression reste utilisable.
 - **Bascule vue mobile / vue PC**, mémorisée d'une visite à l'autre.
   En vue PC, un bouton vert « Mob » permet de revenir en vue mobile.
+- **Diagnostic** : appui long sur « Vue PC » pour afficher et copier la structure de la page,
+  à joindre à un ticket quand l'interface casse.
 - **Health check** des sélecteurs en mode debug, pour repérer vite ce qui a cassé
   après une mise à jour de Spotify.
 

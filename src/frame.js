@@ -24,7 +24,12 @@ export const AREA_CLASSES = Object.freeze({
   hidden: 'sm-area-hidden',
   /** Barre du haut placée hors de la grille (fixée en haut de l'écran). */
   top: 'sm-top',
+  /** Barre de lecture placée hors de la grille (fixée au-dessus de la barre du bas). */
+  bottom: 'sm-bottom',
 });
+
+/** Élément injecté par SpiceMobile (barre du bas, bouton, diagnostic...) ? */
+const isOwn = (el) => el.id.startsWith('sm-');
 
 export const PLAYER_CLASSES = Object.freeze({
   row: 'sm-player-row',
@@ -140,6 +145,7 @@ export function findExternalHeader(grid, rect = (el) => el.getBoundingClientRect
   const body = grid.ownerDocument.body;
   for (let node = grid; node && node !== body; node = node.parentElement) {
     for (let sib = node.previousElementSibling; sib; sib = sib.previousElementSibling) {
+      if (isOwn(sib)) continue;
       const r = rect(sib);
       if (r.height > 0 && r.height <= HEADER_MAX_H && sib.querySelector('a[href], button')) {
         return sib;
@@ -149,12 +155,27 @@ export function findExternalHeader(grid, rect = (el) => el.getBoundingClientRect
   return null;
 }
 
+/**
+ * Barre de lecture placée hors de la grille : ancêtre du bouton lecture qui est
+ * frère de la grille (ou d'un de ses ancêtres).
+ * @param {Element} grid
+ * @returns {Element | null}
+ */
+export function findExternalPlayer(grid) {
+  const play = grid.ownerDocument.querySelector(SEL.playPause);
+  if (!play || grid.contains(play)) return null;
+  let node = play;
+  while (node.parentElement && !node.parentElement.contains(grid)) node = node.parentElement;
+  return node.parentElement && !isOwn(node) ? node : null;
+}
+
 /** Retire toutes les classes sm-area-* (retour en vue PC). */
 export function untagAreas(doc = document) {
   for (const cls of Object.values(AREA_CLASSES)) {
     for (const el of doc.querySelectorAll(`.${cls}`)) el.classList.remove(cls);
   }
   doc.documentElement.style.removeProperty('--sm-top-h');
+  doc.documentElement.style.removeProperty('--sm-bottom-h');
 }
 
 /**
@@ -192,25 +213,37 @@ export function setupFrame(doc = document) {
   let childCount = -1;
   /** Dernier classement (ms) : sans barre du haut trouvée, on réessaie au plus 1 fois/s. */
   let lastTag = 0;
-  /** @type {Element | null} Barre du haut hors de la grille. */
-  let top = null;
+  /** Barres placées hors de la grille, fixées en haut / en bas de l'écran. */
+  const bars = {
+    top: { el: /** @type {Element | null} */ (null), cls: AREA_CLASSES.top, prop: '--sm-top-h' },
+    bottom: {
+      el: /** @type {Element | null} */ (null),
+      cls: AREA_CLASSES.bottom,
+      prop: '--sm-bottom-h',
+    },
+  };
 
   const style = doc.documentElement.style;
-  const measureTop = () => {
-    const h = top && top.isConnected ? Math.round(top.getBoundingClientRect().height) : 0;
-    style.setProperty('--sm-top-h', `${h}px`);
+  const measure = () => {
+    for (const bar of Object.values(bars)) {
+      const h = bar.el?.isConnected ? Math.round(bar.el.getBoundingClientRect().height) : 0;
+      style.setProperty(bar.prop, `${h}px`);
+    }
   };
-  const resize = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(measureTop);
+  const resize = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(measure);
 
-  const setTop = (el) => {
-    if (el === top) return;
-    top?.classList.remove(AREA_CLASSES.top);
-    top = el;
-    top?.classList.add(AREA_CLASSES.top);
+  /** @param {'top' | 'bottom'} name @param {Element | null} el */
+  const setBar = (name, el) => {
+    const bar = bars[name];
+    if (el === bar.el) return;
+    bar.el?.classList.remove(bar.cls);
+    bar.el = el;
+    el?.classList.add(bar.cls);
     resize?.disconnect();
-    if (top) resize?.observe(top);
-    measureTop();
+    for (const b of Object.values(bars)) if (b.el) resize?.observe(b.el);
+    measure();
   };
+  const lost = (name) => !bars[name].el?.isConnected;
 
   const isOn = () => doc.documentElement.classList.contains(CLASSES.on);
 
@@ -218,7 +251,8 @@ export function setupFrame(doc = document) {
   const refresh = () => {
     if (!isOn()) {
       if (grid) untagAreas(doc);
-      top = null;
+      bars.top.el = null;
+      bars.bottom.el = null;
       resize?.disconnect();
       grid = null;
       row = null;
@@ -231,14 +265,14 @@ export function setupFrame(doc = document) {
     }
     if (grid) {
       const changed = grid.children.length !== childCount;
-      const noHeader = !grid.querySelector(`:scope > .${AREA_CLASSES.header}`);
-      const lostTop = noHeader && (!top || !top.isConnected);
-      if (changed || (lostTop && Date.now() - lastTag > 1000)) {
+      const inGrid = (role) => grid.querySelector(`:scope > .${AREA_CLASSES[role]}`);
+      const missing = (!inGrid('header') && lost('top')) || (!inGrid('player') && lost('bottom'));
+      if (changed || (missing && Date.now() - lastTag > 1000)) {
         tagAreas(grid);
         childCount = grid.children.length;
         lastTag = Date.now();
-        const inside = grid.querySelector(`:scope > .${AREA_CLASSES.header}`);
-        setTop(inside ? null : findExternalHeader(grid));
+        setBar('top', inGrid('header') ? null : findExternalHeader(grid));
+        setBar('bottom', inGrid('player') ? null : findExternalPlayer(grid));
       }
     }
     if (!row || !row.isConnected) {

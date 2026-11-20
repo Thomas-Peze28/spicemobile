@@ -3,7 +3,7 @@
  * (.sm-grid) et classe ses zones (.sm-area-*). De haut en bas :
  *   barre du haut / contenu / barre de lecture, puis la barre SpiceMobile (fixe).
  * Si la barre du haut est hors de la grille, frame.js la marque .sm-top et mesure
- * sa hauteur (--sm-top-h).
+ * sa hauteur (--sm-top-h). Idem pour la barre de lecture (.sm-bottom, --sm-bottom-h).
  */
 html.sm-on .sm-grid {
   display: grid !important;
@@ -15,7 +15,7 @@ html.sm-on .sm-grid {
   top: var(--sm-top-h, 0px) !important;
   left: 0 !important;
   right: 0 !important;
-  bottom: var(--sm-nav-h) !important;
+  bottom: calc(var(--sm-nav-h) + var(--sm-bottom-h, 0px)) !important;
   width: auto !important;
   min-width: 0 !important;
   height: auto !important;
@@ -58,6 +58,20 @@ html.sm-on .sm-top {
   right: 0 !important;
   width: auto !important;
   min-width: 0 !important;
+  z-index: 100 !important;
+  background: #000 !important;
+}
+
+/* Barre de lecture placée hors de la grille par Spotify. */
+html.sm-on .sm-bottom {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: var(--sm-nav-h) !important;
+  top: auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  height: auto !important;
   z-index: 100 !important;
   background: #000 !important;
 }

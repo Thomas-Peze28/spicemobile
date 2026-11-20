@@ -7,6 +7,20 @@ et le projet respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [0.2.4] - 2026-11-20
+
+### Corrigé
+
+- La barre du bas SpiceMobile pouvait être prise pour la barre du haut de Spotify
+  et se retrouver en haut de l'écran : les éléments SpiceMobile sont maintenant ignorés.
+- Barre de lecture toujours coupée en bas : quand Spotify la place hors de la grille
+  de mise en page, SpiceMobile la fixe au-dessus de la barre du bas.
+
+### Ajouté
+
+- Diagnostic de mise en page : appui long sur « Vue PC » (ou `SpiceMobile.diag()`).
+  Affiche la structure de la page, avec un bouton pour la copier et la joindre à un ticket.
+
 ## [0.2.3] - 2026-11-20
 
 ### Corrigé
@@ -84,7 +98,8 @@ Version initiale, distribuée hors GitHub Releases.
 - Swipe sur la barre de lecture : gauche = suivant, droite = précédent.
 - Bascule vue mobile / vue PC, mémorisée dans `localStorage`.
 
-[Unreleased]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.3...HEAD
+[Unreleased]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.4...HEAD
+[0.2.4]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.0...v0.2.1

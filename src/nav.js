@@ -1,6 +1,7 @@
 // Barre de navigation du bas : Accueil, Recherche, Biblio, Vue PC.
 
 import { CLASSES, IDS } from './config.js';
+import { showDiagnostic } from './diag.js';
 import { isDrawerOpen, toggleDrawer } from './drawer.js';
 import { EVENTS, on } from './events.js';
 import { navigate } from './history.js';
@@ -9,7 +10,7 @@ import { SEL } from './selectors.js';
 
 /** @typedef {'home' | 'search' | 'library' | 'desktop'} TabId */
 
-/** @type {Array<{ id: TabId, icon: string, label: string, action: () => void }>} */
+/** @type {Array<{ id: TabId, icon: string, label: string, action: () => void, longPress?: () => void }>} */
 export const NAV_ITEMS = [
   { id: 'home', icon: '⌂', label: 'Accueil', action: () => navigate('/', SEL.homeLink) },
   {
@@ -19,7 +20,14 @@ export const NAV_ITEMS = [
     action: () => navigate('/search', SEL.searchLink),
   },
   { id: 'library', icon: '≡', label: 'Biblio', action: () => toggleDrawer() },
-  { id: 'desktop', icon: '⇱', label: 'Vue PC', action: () => setMobileMode(false) },
+  {
+    id: 'desktop',
+    icon: '⇱',
+    label: 'Vue PC',
+    action: () => setMobileMode(false),
+    // Appui long : diagnostic de mise en page (à copier pour signaler un problème).
+    longPress: () => showDiagnostic(),
+  },
 ];
 
 /**
@@ -32,6 +40,42 @@ export function activeTab({ pathname, drawerOpen }) {
   if (pathname === '/' || pathname === '') return 'home';
   if (pathname === '/search' || pathname.startsWith('/search/')) return 'search';
   return null;
+}
+
+/** Durée (ms) d'un appui long. */
+const LONG_PRESS_MS = 700;
+
+/**
+ * Clic normal, et appui long optionnel (le clic qui suit l'appui long est ignoré).
+ * @param {HTMLElement} btn
+ * @param {() => void} action
+ * @param {(() => void) | undefined} longPress
+ */
+function bindPress(btn, action, longPress) {
+  let timer = 0;
+  let fired = false;
+  if (longPress) {
+    const cancel = () => clearTimeout(timer);
+    btn.addEventListener('pointerdown', () => {
+      fired = false;
+      cancel();
+      timer = window.setTimeout(() => {
+        fired = true;
+        longPress();
+      }, LONG_PRESS_MS);
+    });
+    for (const type of ['pointerup', 'pointerleave', 'pointercancel']) {
+      btn.addEventListener(type, cancel);
+    }
+    btn.addEventListener('contextmenu', (event) => event.preventDefault());
+  }
+  btn.addEventListener('click', () => {
+    if (fired) {
+      fired = false;
+      return;
+    }
+    action();
+  });
 }
 
 export function buildNav() {
@@ -55,7 +99,7 @@ export function buildNav() {
     label.textContent = item.label;
 
     btn.append(icon, label);
-    btn.addEventListener('click', item.action);
+    bindPress(btn, item.action, item.longPress);
     nav.appendChild(btn);
   }
   document.body.appendChild(nav);
