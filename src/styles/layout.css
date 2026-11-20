@@ -19,6 +19,7 @@ html.sm-on .sm-grid {
   width: auto !important;
   min-width: 0 !important;
   height: auto !important;
+  min-height: 0 !important;
   max-height: none !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -48,6 +49,7 @@ html.sm-on .sm-area-player {
   grid-row: 3 !important;
   width: auto !important;
   height: auto !important;
+  margin: 0 !important;
 }
 
 /* Barre du haut placée hors de la grille par Spotify. */

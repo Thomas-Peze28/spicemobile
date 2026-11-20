@@ -90,30 +90,24 @@ export function classifyAreas(grid, rect = (el) => el.getBoundingClientRect()) {
     else rest.push(child);
   }
 
-  // Barre du haut : collée en haut, peu haute, avec des liens ou boutons.
-  const gridTop = rect(grid).top;
-  const header = rest.find((el) => {
-    const r = rect(el);
-    return (
-      r.height > 0 &&
-      r.height <= HEADER_MAX_H &&
-      r.top - gridTop <= 16 &&
-      has(el, 'a[href], button, input')
-    );
-  });
-  if (header) roles.set(header, 'header');
-
-  // Contenu : l'élément <main> s'il existe, sinon la plus grande zone restante.
-  const candidates = rest.filter((el) => el !== header);
+  // Contenu : l'élément <main> (ou #main-view) s'il existe, sinon la plus grande zone.
   const area = (el) => {
     const r = rect(el);
     return r.width * r.height;
   };
   const main =
-    candidates.find((el) => has(el, 'main')) ??
-    candidates.reduce((best, el) => (best && area(best) >= area(el) ? best : el), null);
+    rest.find((el) => has(el, 'main, #main-view')) ??
+    rest.reduce((best, el) => (best && area(best) >= area(el) ? best : el), null);
   if (main) roles.set(main, 'main');
 
+  // Barre du haut : la première zone restante avec des liens ou boutons. Pas de test
+  // de position : une zone déjà masquée par SpiceMobile mesure 0 et doit être retrouvée.
+  const header = rest.find(
+    (el) => el !== main && rect(el).height <= HEADER_MAX_H && has(el, 'a[href], button, input'),
+  );
+  if (header) roles.set(header, 'header');
+
+  const candidates = rest.filter((el) => el !== header);
   // Le reste (poignées de redimensionnement, panneaux annexes) est masqué.
   for (const el of candidates) if (el !== main) roles.set(el, 'hidden');
   return roles;
@@ -184,16 +178,28 @@ export function untagAreas(doc = document) {
  * @returns {boolean} true si la barre a été reconnue.
  */
 export function tagPlayer(root = document) {
-  const widget = root.querySelector(SEL.nowPlayingWidget);
   const play = root.querySelector(SEL.playPause);
-  if (!widget || !play) return false;
-  const row = commonAncestor(widget, play);
-  if (!row) return false;
+  if (!play) return false;
+  const widget = root.querySelector(SEL.nowPlayingWidget);
+
+  // Rangée : ancêtre commun du titre et du bouton lecture, ou à défaut le premier
+  // élément de la barre de lecture qui a plusieurs enfants (gauche, centre, droite).
+  let row = widget ? commonAncestor(widget, play) : null;
+  if (!row) {
+    const bar = play.closest(SEL.nowPlayingBar);
+    if (!bar) return false;
+    row = bar;
+    while (row.children.length === 1) row = row.children[0];
+    if (row.children.length < 2 || !row.contains(play)) return false;
+  }
+  const left = widget
+    ? [...row.children].find((child) => child.contains(widget))
+    : [...row.children].find((child) => !child.contains(play));
 
   row.classList.add(PLAYER_CLASSES.row);
   for (const child of row.children) {
     let cls = PLAYER_CLASSES.extra;
-    if (child.contains(widget)) cls = PLAYER_CLASSES.left;
+    if (child === left) cls = PLAYER_CLASSES.left;
     else if (child.contains(play)) cls = PLAYER_CLASSES.center;
     child.classList.remove(...Object.values(PLAYER_CLASSES));
     child.classList.add(cls);
