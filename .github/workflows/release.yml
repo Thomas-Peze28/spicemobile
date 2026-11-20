@@ -3,6 +3,9 @@ name: Release
 on:
   push:
     tags: ['v*']
+  # Lancement manuel (onglet Actions, depuis main) : crée le tag v<version de package.json>
+  # puis publie la release. Utile sans accès à git (depuis un téléphone).
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -19,13 +22,23 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
 
-      - name: Vérifier que le tag correspond à package.json
+      - name: Déterminer le tag et vérifier qu'il correspond à package.json
         run: |
           version="$(node -p "require('./package.json').version")"
-          if [ "v${version}" != "${GITHUB_REF_NAME}" ]; then
-            echo "::error::Le tag ${GITHUB_REF_NAME} ne correspond pas à la version v${version} de package.json."
+          if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
+            if [ "${GITHUB_REF_NAME}" != "main" ]; then
+              echo "::error::Le lancement manuel se fait depuis main, pas ${GITHUB_REF_NAME}."
+              exit 1
+            fi
+            tag="v${version}"
+          else
+            tag="${GITHUB_REF_NAME}"
+          fi
+          if [ "v${version}" != "${tag}" ]; then
+            echo "::error::Le tag ${tag} ne correspond pas à la version v${version} de package.json."
             exit 1
           fi
+          echo "TAG=${tag}" >> "$GITHUB_ENV"
 
       - run: npm ci
       - run: npm run lint
@@ -34,7 +47,7 @@ jobs:
 
       - name: Extraire les notes de version du CHANGELOG
         run: |
-          version="${GITHUB_REF_NAME#v}"
+          version="${TAG#v}"
           awk -v v="$version" '
             $0 ~ "^## \\[" v "\\]" { found = 1; next }
             found && /^## \[/ { exit }
@@ -44,11 +57,17 @@ jobs:
             echo "Voir CHANGELOG.md." > release-notes.md
           fi
 
+      - name: Créer le tag (lancement manuel)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          git tag "${TAG}"
+          git push origin "refs/tags/${TAG}"
+
       - name: Créer la GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${GITHUB_REF_NAME}" dist/spicemobile.user.js \
-            --title "SpiceMobile ${GITHUB_REF_NAME}" \
+          gh release create "${TAG}" dist/spicemobile.user.js \
+            --title "SpiceMobile ${TAG}" \
             --notes-file release-notes.md \
             --verify-tag
