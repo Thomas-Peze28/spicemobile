@@ -4,6 +4,25 @@ import { CLASSES, CONFIG } from './config.js';
 import { EVENTS, emit, on } from './events.js';
 import { SEL } from './selectors.js';
 
+/**
+ * La bibliothèque est-elle en mode réduit (pochettes seules, sans les noms) ?
+ * En mode réduit, le bouton « Votre bibliothèque » n'affiche pas de texte.
+ * @param {Element | null} toggle
+ * @returns {boolean}
+ */
+export function isLibraryCollapsed(toggle) {
+  if (!toggle) return false;
+  const expanded = toggle.getAttribute('aria-expanded');
+  if (expanded !== null) return expanded === 'false';
+  return (toggle.textContent ?? '').trim() === '';
+}
+
+/** Déplie la bibliothèque si Spotify l'affiche en mode réduit. */
+export function expandLibrary(doc = document) {
+  const toggle = doc.querySelector(SEL.libraryToggle);
+  if (toggle instanceof HTMLElement && isLibraryCollapsed(toggle)) toggle.click();
+}
+
 const root = () => document.documentElement;
 
 /** @returns {boolean} */
@@ -13,6 +32,7 @@ export function isDrawerOpen() {
 
 export function openDrawer() {
   root().classList.add(CLASSES.drawerOpen);
+  expandLibrary();
   emit(EVENTS.drawer, { open: true });
 }
 

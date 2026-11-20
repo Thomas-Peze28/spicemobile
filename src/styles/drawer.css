@@ -14,3 +14,8 @@ html.sm-on.sm-drawer-open #Desktop_LeftSidebar_Id {
   z-index: 9998 !important;
   background: #121212 !important;
 }
+html.sm-on.sm-drawer-open .Root__nav-bar > *,
+html.sm-on.sm-drawer-open #Desktop_LeftSidebar_Id > * {
+  width: 100% !important;
+  max-width: none !important;
+}

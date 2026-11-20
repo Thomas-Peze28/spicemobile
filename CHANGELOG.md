@@ -7,6 +7,17 @@ et le projet respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+### Corrigé
+
+- Vue mobile : le contenu s'affichait dans une colonne étroite, à côté du panneau
+  « En cours de lecture ». Chaque zone est maintenant fixée à l'écran (barre du haut,
+  contenu, barre de lecture, barre du bas), sans dépendre de la grille de Spotify.
+- Le panneau de droite et les poignées de redimensionnement sont masqués.
+- La barre de lecture n'est plus coupée sous la barre du bas : elle tient sur deux lignes
+  (titre, puis boutons et progression) et sa colonne de droite est masquée.
+- Le tiroir Bibliothèque déplie la bibliothèque si Spotify l'affichait réduite
+  (pochettes seules, sans les noms).
+
 ## [0.2.0] - 2026-11-20
 
 ### Ajouté

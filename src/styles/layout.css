@@ -1,18 +1,46 @@
-/* Layout : une seule colonne, à la largeur de l'écran. */
+/*
+ * Layout : chaque zone est fixée à l'écran, indépendamment de la grille de Spotify
+ * (dont la structure change souvent). De haut en bas :
+ *   barre du haut (--sm-top-h) / contenu / barre de lecture (--sm-player-h) / barre SpiceMobile.
+ */
 html.sm-on .Root__top-container {
-  display: flex !important;
-  flex-direction: column !important;
   min-width: 0 !important;
-  height: calc(100dvh - var(--sm-nav-h)) !important;
-  padding: 0 !important;
-  gap: 0 !important;
+  height: 100dvh !important;
+  overflow: hidden !important;
 }
+
+html.sm-on #global-nav-bar,
+html.sm-on [data-testid='global-nav-bar'],
+html.sm-on .Root__globalNav {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: auto !important;
+  min-width: 0 !important;
+  z-index: 102 !important;
+  background: #000 !important;
+}
+
 html.sm-on .Root__main-view {
-  flex: 1 1 auto !important;
-  min-height: 0 !important;
-  width: 100% !important;
+  position: fixed !important;
+  top: var(--sm-top-h) !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: calc(var(--sm-nav-h) + var(--sm-player-h)) !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  margin: 0 !important;
   border-radius: 0 !important;
+  z-index: 100 !important;
+  background: var(--sm-bg) !important;
 }
-html.sm-on .Root__right-sidebar {
+
+/* Panneau de droite et poignées de redimensionnement : inutiles sur téléphone. */
+html.sm-on .Root__right-sidebar,
+html.sm-on #Desktop_PanelContainer_Id,
+html.sm-on .LayoutResizer__resize-bar {
   display: none !important;
 }

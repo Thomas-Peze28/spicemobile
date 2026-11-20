@@ -37,9 +37,28 @@ export const SELECTORS = {
     description: 'Sidebar gauche (bibliothèque), utilisée comme tiroir',
   },
   rightSidebar: {
-    variants: ['.Root__right-sidebar'],
+    variants: ['.Root__right-sidebar', '#Desktop_PanelContainer_Id'],
     group: 'contextual',
-    description: 'Sidebar droite (file d’attente, « En cours de lecture »)',
+    description: 'Sidebar droite (file d’attente, « En cours de lecture ») : masquée',
+  },
+  globalNav: {
+    variants: ['#global-nav-bar', '[data-testid="global-nav-bar"]', '.Root__globalNav'],
+    group: 'core',
+    description: 'Barre du haut (retour, recherche, profil) : fixée en haut',
+  },
+  layoutResizer: {
+    variants: ['.LayoutResizer__resize-bar'],
+    group: 'contextual',
+    description: 'Poignées de redimensionnement des panneaux (masquées)',
+  },
+  libraryToggle: {
+    variants: [
+      '#Desktop_LeftSidebar_Id header button',
+      '.Root__nav-bar header button',
+      '#Desktop_LeftSidebar_Id button',
+    ],
+    group: 'contextual',
+    description: 'Bouton « Votre bibliothèque » (déplie la bibliothèque réduite)',
   },
 
   // --- Barre de lecture ---
@@ -47,6 +66,11 @@ export const SELECTORS = {
     variants: ['.Root__now-playing-bar', '[data-testid="now-playing-bar"]'],
     group: 'core',
     description: 'Barre de lecture (zone du swipe)',
+  },
+  nowPlayingWidget: {
+    variants: ['[data-testid="now-playing-widget"]'],
+    group: 'core',
+    description: 'Pochette + titre en cours (1re ligne de la barre de lecture)',
   },
   progressBar: {
     variants: ['[data-testid="playback-progressbar"]', 'input[type="range"]'],
