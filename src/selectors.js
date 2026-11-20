@@ -41,11 +41,6 @@ export const SELECTORS = {
     group: 'contextual',
     description: 'Sidebar droite (file d’attente, « En cours de lecture ») : masquée',
   },
-  globalNav: {
-    variants: ['#global-nav-bar', '[data-testid="global-nav-bar"]', '.Root__globalNav'],
-    group: 'core',
-    description: 'Barre du haut (retour, recherche, profil) : fixée en haut',
-  },
   layoutResizer: {
     variants: ['.LayoutResizer__resize-bar'],
     group: 'contextual',
