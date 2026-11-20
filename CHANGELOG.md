@@ -7,6 +7,13 @@ et le projet respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [0.2.7] - 2026-11-20
+
+### Modifié
+
+- Barre de lecture plus compacte et mieux alignée : espacements réduits, plus de filet
+  entre les lignes ; file d'attente et appareils collés à gauche, volume à droite.
+
 ## [0.2.6] - 2026-11-20
 
 ### Modifié
@@ -121,7 +128,8 @@ Version initiale, distribuée hors GitHub Releases.
 - Swipe sur la barre de lecture : gauche = suivant, droite = précédent.
 - Bascule vue mobile / vue PC, mémorisée dans `localStorage`.
 
-[Unreleased]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.6...HEAD
+[Unreleased]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.7...HEAD
+[0.2.7]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.6...v0.2.7
 [0.2.6]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.5...v0.2.6
 [0.2.5]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.4...v0.2.5
 [0.2.4]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.3...v0.2.4

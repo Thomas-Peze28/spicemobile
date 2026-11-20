@@ -13,7 +13,7 @@ html.sm-on [data-testid='now-playing-bar'] {
   min-width: 0 !important;
   width: 100% !important;
   height: auto !important;
-  padding: 6px 12px 4px !important;
+  padding: 8px 16px 4px !important;
   box-sizing: border-box !important;
 }
 
@@ -21,7 +21,7 @@ html.sm-on .sm-player-row {
   display: flex !important;
   flex-flow: row wrap !important;
   align-items: center !important;
-  row-gap: 4px !important;
+  row-gap: 2px !important;
   height: auto !important;
   min-width: 0 !important;
 }
@@ -30,9 +30,10 @@ html.sm-on .sm-player-row > * {
   width: 100% !important;
   max-width: none !important;
   min-width: 0 !important;
+  margin: 0 !important;
 }
 
-/* Ligne 1 : pochette + titre + artiste, sur toute la largeur. */
+/* Ligne 1 : pochette + titre + artiste. */
 html.sm-on .sm-player-row > .sm-player-left {
   order: 1 !important;
   height: 56px !important;
@@ -44,38 +45,46 @@ html.sm-on .sm-player-row > .sm-player-center {
   order: 2 !important;
 }
 
-/* Ligne 4 : file d'attente, appareils... à gauche, volume à droite. */
+/* Ligne 4 : file d'attente et appareils à gauche, volume à droite. */
 html.sm-on .sm-player-row > .sm-player-extra {
   order: 3 !important;
   display: flex !important;
   align-items: center !important;
   justify-content: flex-start !important;
-  gap: 4px !important;
-  min-height: 44px !important;
-  padding-top: 4px !important;
-  border-top: 1px solid #282828 !important;
+  gap: 0 !important;
+  height: 40px !important;
+  padding: 0 !important;
   overflow: hidden !important;
 }
-html.sm-on .sm-player-extra > div:only-child {
+/* Spotify aligne cette colonne à droite : ses conteneurs (ceux qui regroupent
+   boutons et volume) passent en pleine largeur, alignés à gauche. */
+html.sm-on .sm-player-extra div:has([data-testid='volume-bar']) {
   display: flex !important;
   flex: 1 1 auto !important;
   align-items: center !important;
-  gap: 4px !important;
-  width: 100% !important;
+  justify-content: flex-start !important;
+  gap: 0 !important;
+  width: auto !important;
   min-width: 0 !important;
+  margin: 0 !important;
 }
 html.sm-on .sm-player-extra * {
   min-width: 0;
 }
+html.sm-on .sm-player-extra button {
+  min-width: 40px !important;
+  min-height: 40px !important;
+}
 
-/* Volume : poussé à droite, la barre prend la place restante. */
+/* Volume : poussé à droite, le curseur prend la place restante. */
 html.sm-on .sm-player-extra [data-testid='volume-bar-toggle-mute-button'] {
   margin-left: auto !important;
 }
 html.sm-on .sm-player-extra [data-testid='volume-bar'] {
-  flex: 0 1 160px !important;
-  width: 160px !important;
-  min-width: 80px !important;
+  flex: 0 1 140px !important;
+  width: 140px !important;
+  min-width: 72px !important;
+  margin-right: 4px !important;
 }
 
 /* Boutons sans intérêt sur téléphone (place limitée). */
