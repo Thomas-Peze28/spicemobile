@@ -1,6 +1,6 @@
 {
   "name": "spicemobile",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Interface mobile pour le lecteur web Spotify : layout une colonne, bibliothèque en tiroir, barre de navigation en bas, gros boutons, swipe pour changer de titre.",
   "license": "MIT",
   "author": "Peze Thomas",
