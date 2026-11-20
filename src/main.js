@@ -4,15 +4,17 @@
 //
 // SpiceMobile agit uniquement sur le DOM et le CSS de la page.
 
+import { exposeApi } from './api.js';
 import { VERSION } from './config.js';
 import { onDomReady } from './dom.js';
 import { setupDrawer } from './drawer.js';
 import { EVENTS, on } from './events.js';
+import { runHealthCheck } from './health.js';
 import { patchHistory } from './history.js';
 import { log } from './log.js';
 import { applyMode, buildFab, injectStyle } from './layout.js';
 import { buildNav, setupNav, updateActive } from './nav.js';
-import { isEnabled } from './storage.js';
+import { isDebug, isEnabled } from './storage.js';
 import { setupSwipe } from './swipe.js';
 import { createViewport } from './viewport.js';
 
@@ -40,7 +42,9 @@ function init() {
     buildNav();
     buildFab();
     updateActive();
+    exposeApi();
     log(`v${VERSION} prête`);
+    if (isDebug()) runHealthCheck();
   });
 }
 
