@@ -10,7 +10,7 @@
 //
 // La barre de lecture est aussi réorganisée en deux lignes : on repère sa rangée
 // (ancêtre commun du titre et du bouton lecture) et on pose des classes
-// sm-player-* sur ses colonnes : titre et volume sur la 1re ligne, boutons et progression sur la 2e.
+// sm-player-* sur ses colonnes : titre, puis boutons et progression, puis volume.
 
 import { CLASSES } from './config.js';
 import { SEL } from './selectors.js';

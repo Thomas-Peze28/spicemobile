@@ -7,6 +7,14 @@ et le projet respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [0.2.6] - 2026-11-20
+
+### Modifié
+
+- Barre de lecture réorganisée en lignes pleine largeur : pochette, titre et artiste ;
+  boutons de lecture ; progression ; puis file d'attente et appareils à gauche, volume
+  à droite. Le titre n'est plus tronqué par le volume.
+
 ## [0.2.5] - 2026-11-20
 
 ### Corrigé
@@ -113,7 +121,8 @@ Version initiale, distribuée hors GitHub Releases.
 - Swipe sur la barre de lecture : gauche = suivant, droite = précédent.
 - Bascule vue mobile / vue PC, mémorisée dans `localStorage`.
 
-[Unreleased]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.5...HEAD
+[Unreleased]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.6...HEAD
+[0.2.6]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.5...v0.2.6
 [0.2.5]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.4...v0.2.5
 [0.2.4]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.2...v0.2.3
