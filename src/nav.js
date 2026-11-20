@@ -12,7 +12,12 @@ import { SEL } from './selectors.js';
 /** @type {Array<{ id: TabId, icon: string, label: string, action: () => void }>} */
 export const NAV_ITEMS = [
   { id: 'home', icon: '⌂', label: 'Accueil', action: () => navigate('/', SEL.homeLink) },
-  { id: 'search', icon: '⌕', label: 'Recherche', action: () => navigate('/search', SEL.searchLink) },
+  {
+    id: 'search',
+    icon: '⌕',
+    label: 'Recherche',
+    action: () => navigate('/search', SEL.searchLink),
+  },
   { id: 'library', icon: '≡', label: 'Biblio', action: () => toggleDrawer() },
   { id: 'desktop', icon: '⇱', label: 'Vue PC', action: () => setMobileMode(false) },
 ];

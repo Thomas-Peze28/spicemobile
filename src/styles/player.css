@@ -3,26 +3,26 @@ html.sm-on .Root__now-playing-bar {
   flex: 0 0 auto !important;
   min-width: 0 !important;
 }
-html.sm-on [data-testid="now-playing-bar"] {
+html.sm-on [data-testid='now-playing-bar'] {
   min-width: 0 !important;
   height: auto !important;
   padding: 8px !important;
 }
 
 /* Volume & co inutiles sur téléphone (boutons physiques). */
-html.sm-on [data-testid="volume-bar"],
-html.sm-on [data-testid="volume-bar-toggle-mute-button"],
-html.sm-on [data-testid="control-button-npv"],
-html.sm-on [data-testid="pip-toggle-button"],
-html.sm-on [data-testid="fullscreen-mode-button"] {
+html.sm-on [data-testid='volume-bar'],
+html.sm-on [data-testid='volume-bar-toggle-mute-button'],
+html.sm-on [data-testid='control-button-npv'],
+html.sm-on [data-testid='pip-toggle-button'],
+html.sm-on [data-testid='fullscreen-mode-button'] {
   display: none !important;
 }
 
 /* Cibles tactiles >= 44px. */
-html.sm-on [data-testid^="control-button-"] {
+html.sm-on [data-testid^='control-button-'] {
   min-width: 44px !important;
   min-height: 44px !important;
 }
-html.sm-on [data-testid="control-button-playpause"] {
+html.sm-on [data-testid='control-button-playpause'] {
   transform: scale(1.25);
 }

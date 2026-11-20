@@ -1,13 +1,13 @@
 /* Listes de titres : #, titre, durée. */
-html.sm-on [role="grid"] [role="row"][aria-rowindex="1"] {
+html.sm-on [role='grid'] [role='row'][aria-rowindex='1'] {
   display: none !important;
 }
-html.sm-on [data-testid="tracklist-row"] {
+html.sm-on [data-testid='tracklist-row'] {
   min-height: 56px !important;
   grid-template-columns: 32px minmax(0, 1fr) auto !important;
   column-gap: 8px !important;
 }
-html.sm-on [data-testid="tracklist-row"] [aria-colindex="3"]:not(:last-child),
-html.sm-on [data-testid="tracklist-row"] [aria-colindex="4"]:not(:last-child) {
+html.sm-on [data-testid='tracklist-row'] [aria-colindex='3']:not(:last-child),
+html.sm-on [data-testid='tracklist-row'] [aria-colindex='4']:not(:last-child) {
   display: none !important;
 }

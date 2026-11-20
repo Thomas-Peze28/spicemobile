@@ -18,7 +18,7 @@ Le blocage des pubs n'est pas dans le script : c'est le rôle d'uBlock Origin.
 
 1. Installe **Firefox** depuis le Play Store.
 2. Dans Firefox, installe les modules **uBlock Origin** et **Tampermonkey** (ou **Violentmonkey**).
-3. Ouvre l'URL *raw* de `spicemobile.user.js` (sur GitHub) : Tampermonkey propose de l'installer.
+3. Ouvre l'URL _raw_ de `spicemobile.user.js` (sur GitHub) : Tampermonkey propose de l'installer.
 4. Ouvre `open.spotify.com` et connecte-toi.
 5. Si Firefox demande d'autoriser le contenu protégé par DRM, accepte. Sans ça, il n'y a pas de son.
 6. Si Spotify affiche une page « Ouvrir l'appli » au lieu du lecteur, active « Version ordinateur » dans le menu ⋮ de Firefox.

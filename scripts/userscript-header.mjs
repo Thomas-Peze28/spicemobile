@@ -14,7 +14,9 @@ const RELEASE_ASSET = 'spicemobile.user.js';
 export function repoUrls(pkg) {
   const { githubUser, repo } = pkg.userscript ?? {};
   if (!githubUser || !repo) {
-    throw new Error('package.json : "userscript.githubUser" et "userscript.repo" sont obligatoires.');
+    throw new Error(
+      'package.json : "userscript.githubUser" et "userscript.repo" sont obligatoires.',
+    );
   }
   const base = `https://github.com/${githubUser}/${repo}`;
   return {
