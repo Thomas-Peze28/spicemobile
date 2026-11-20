@@ -1,0 +1,56 @@
+name: Sélecteur cassé
+description: Une partie de l'interface ne s'applique plus après une mise à jour de Spotify.
+title: '[Sélecteur] '
+labels: ['selector', 'bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci ! Avant d'ouvrir l'issue, lance le health check sur la page concernée :
+        dans la console distante (voir README > Débogage), tape `SpiceMobile.healthCheck()`.
+  - type: input
+    id: version
+    attributes:
+      label: Version de SpiceMobile
+      description: Tape `SpiceMobile.version` dans la console.
+      placeholder: 0.2.0
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Navigateur et gestionnaire de scripts
+      placeholder: Firefox Android 145, Tampermonkey 5.4
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Page concernée
+      description: Le chemin, sans données personnelles.
+      placeholder: /playlist/…, /search, accueil
+    validations:
+      required: true
+  - type: textarea
+    id: symptom
+    attributes:
+      label: Ce qui ne fonctionne plus
+      placeholder: Le tiroir bibliothèque ne s'ouvre plus, le swipe ne change plus de titre…
+    validations:
+      required: true
+  - type: textarea
+    id: health
+    attributes:
+      label: Sortie du health check
+      description: Copie les lignes « Introuvable (core) » et « Syntaxe invalide » de la console.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: dom
+    attributes:
+      label: Nouveau sélecteur proposé (facultatif)
+      description: |
+        Si tu as trouvé l'élément dans l'inspecteur, colle son HTML (balise et attributs utiles)
+        ou le sélecteur qui marche. Préfère `data-testid`, `aria-*` ou les classes `Root__*`.
+      render: html
