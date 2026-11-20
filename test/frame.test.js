@@ -101,3 +101,24 @@ describe('classifyAreas', () => {
     expect(document.getElementById('right').className).toBe('sm-area-hidden');
   });
 });
+
+describe('findExternalHeader', () => {
+  it('trouve la barre du haut placée avant la grille', async () => {
+    const { findExternalHeader } = await import('../src/frame.js');
+    document.body.innerHTML = `
+      <div id="root">
+        <div id="nav"><a href="/">Accueil</a></div>
+        <div id="wrap"><div id="grid"></div></div>
+      </div>`;
+    const rect = (el) =>
+      el.id === 'nav' ? { top: 0, width: 400, height: 64 } : { top: 0, width: 0, height: 0 };
+    expect(findExternalHeader(document.getElementById('grid'), rect)?.id).toBe('nav');
+  });
+
+  it('ignore les frères trop hauts ou sans lien', async () => {
+    const { findExternalHeader } = await import('../src/frame.js');
+    document.body.innerHTML = `<div id="big"><a href="/x">x</a></div><div id="plain"></div><div id="grid"></div>`;
+    const rect = (el) => ({ top: 0, width: 400, height: el.id === 'big' ? 900 : 40 });
+    expect(findExternalHeader(document.getElementById('grid'), rect)).toBeNull();
+  });
+});

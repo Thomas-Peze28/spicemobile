@@ -1,6 +1,6 @@
 /*
  * Barre de lecture, au-dessus de la barre SpiceMobile, sur deux lignes :
- *   1. pochette + titre ;
+ *   1. pochette + titre, puis volume (et appareils, file d'attente) à droite ;
  *   2. boutons + progression.
  * Les classes sm-player-* sont posées par frame.js.
  */
@@ -18,31 +18,55 @@ html.sm-on [data-testid='now-playing-bar'] {
 
 html.sm-on .sm-player-row {
   display: flex !important;
-  flex-direction: column !important;
-  align-items: stretch !important;
-  gap: 2px !important;
+  flex-flow: row wrap !important;
+  align-items: center !important;
+  column-gap: 8px !important;
+  row-gap: 2px !important;
   height: auto !important;
   min-width: 0 !important;
 }
-html.sm-on .sm-player-row > .sm-player-left,
-html.sm-on .sm-player-row > .sm-player-center {
-  width: 100% !important;
+/* Ligne 1 : pochette + titre à gauche, volume à droite. */
+html.sm-on .sm-player-row > .sm-player-left {
+  order: 1 !important;
+  flex: 1 1 0 !important;
+  width: auto !important;
   max-width: none !important;
   min-width: 0 !important;
-  flex: none !important;
-}
-html.sm-on .sm-player-row > .sm-player-left {
   height: 48px !important;
   overflow: hidden !important;
 }
 html.sm-on .sm-player-row > .sm-player-extra {
-  display: none !important;
+  order: 2 !important;
+  flex: 0 1 auto !important;
+  width: auto !important;
+  max-width: 55% !important;
+  min-width: 0 !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  overflow: hidden !important;
+}
+html.sm-on .sm-player-row > .sm-player-extra * {
+  min-width: 0;
+}
+/* Ligne 2 : boutons + progression, sur toute la largeur. */
+html.sm-on .sm-player-row > .sm-player-center {
+  order: 3 !important;
+  flex: 0 0 100% !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
 }
 
-/* Volume & co inutiles sur téléphone (boutons physiques). */
-html.sm-on [data-testid='volume-bar'],
-html.sm-on [data-testid='volume-bar-toggle-mute-button'],
+/* Volume : barre compacte. */
+html.sm-on [data-testid='volume-bar'] {
+  flex: 0 1 96px !important;
+  width: 96px !important;
+  min-width: 56px !important;
+}
+
+/* Boutons sans intérêt sur téléphone (place limitée). */
 html.sm-on [data-testid='control-button-npv'],
+html.sm-on [data-testid='lyrics-button'],
 html.sm-on [data-testid='pip-toggle-button'],
 html.sm-on [data-testid='fullscreen-mode-button'] {
   display: none !important;

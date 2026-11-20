@@ -34,7 +34,7 @@ SpiceMobile ne touche pas à ça : son seul rôle est l'**interface mobile**.
 - **Bibliothèque** (sidebar gauche) transformée en tiroir plein écran.
   Il se referme tout seul quand on choisit une playlist.
 - **Barre de navigation en bas** : Accueil, Recherche, Biblio, Vue PC.
-- **Gros boutons** de lecture (44 px minimum). Le volume est masqué : le téléphone a ses boutons.
+- **Gros boutons** de lecture (44 px minimum), barre de progression et volume dans la barre de lecture.
 - **Listes de titres** simplifiées : numéro, titre, durée.
 - **Swipe** sur la barre de lecture : vers la gauche pour le titre suivant,
   vers la droite pour le précédent. La barre de progression reste utilisable.

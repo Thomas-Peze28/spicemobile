@@ -10,7 +10,7 @@
 //
 // La barre de lecture est aussi réorganisée en deux lignes : on repère sa rangée
 // (ancêtre commun du titre et du bouton lecture) et on pose des classes
-// sm-player-* sur ses colonnes. La colonne de droite (volume, paroles...) est masquée.
+// sm-player-* sur ses colonnes : titre et volume sur la 1re ligne, boutons et progression sur la 2e.
 
 import { CLASSES } from './config.js';
 import { SEL } from './selectors.js';
@@ -22,6 +22,8 @@ export const AREA_CLASSES = Object.freeze({
   main: 'sm-area-main',
   player: 'sm-area-player',
   hidden: 'sm-area-hidden',
+  /** Barre du haut placée hors de la grille (fixée en haut de l'écran). */
+  top: 'sm-top',
 });
 
 export const PLAYER_CLASSES = Object.freeze({
@@ -84,10 +86,14 @@ export function classifyAreas(grid, rect = (el) => el.getBoundingClientRect()) {
   }
 
   // Barre du haut : collée en haut, peu haute, avec des liens ou boutons.
+  const gridTop = rect(grid).top;
   const header = rest.find((el) => {
     const r = rect(el);
     return (
-      r.height > 0 && r.height <= HEADER_MAX_H && r.top <= 8 && has(el, 'a[href], button, input')
+      r.height > 0 &&
+      r.height <= HEADER_MAX_H &&
+      r.top - gridTop <= 16 &&
+      has(el, 'a[href], button, input')
     );
   });
   if (header) roles.set(header, 'header');
@@ -123,11 +129,32 @@ export function tagAreas(grid, rect) {
   }
 }
 
+/**
+ * Barre du haut placée hors de la grille : premier frère précédent (de la grille
+ * ou d'un de ses ancêtres) qui ressemble à une barre de navigation.
+ * @param {Element} grid
+ * @param {(el: Element) => { top: number, width: number, height: number }} [rect]
+ * @returns {Element | null}
+ */
+export function findExternalHeader(grid, rect = (el) => el.getBoundingClientRect()) {
+  const body = grid.ownerDocument.body;
+  for (let node = grid; node && node !== body; node = node.parentElement) {
+    for (let sib = node.previousElementSibling; sib; sib = sib.previousElementSibling) {
+      const r = rect(sib);
+      if (r.height > 0 && r.height <= HEADER_MAX_H && sib.querySelector('a[href], button')) {
+        return sib;
+      }
+    }
+  }
+  return null;
+}
+
 /** Retire toutes les classes sm-area-* (retour en vue PC). */
 export function untagAreas(doc = document) {
   for (const cls of Object.values(AREA_CLASSES)) {
     for (const el of doc.querySelectorAll(`.${cls}`)) el.classList.remove(cls);
   }
+  doc.documentElement.style.removeProperty('--sm-top-h');
 }
 
 /**
@@ -165,6 +192,25 @@ export function setupFrame(doc = document) {
   let childCount = -1;
   /** Dernier classement (ms) : sans barre du haut trouvée, on réessaie au plus 1 fois/s. */
   let lastTag = 0;
+  /** @type {Element | null} Barre du haut hors de la grille. */
+  let top = null;
+
+  const style = doc.documentElement.style;
+  const measureTop = () => {
+    const h = top && top.isConnected ? Math.round(top.getBoundingClientRect().height) : 0;
+    style.setProperty('--sm-top-h', `${h}px`);
+  };
+  const resize = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(measureTop);
+
+  const setTop = (el) => {
+    if (el === top) return;
+    top?.classList.remove(AREA_CLASSES.top);
+    top = el;
+    top?.classList.add(AREA_CLASSES.top);
+    resize?.disconnect();
+    if (top) resize?.observe(top);
+    measureTop();
+  };
 
   const isOn = () => doc.documentElement.classList.contains(CLASSES.on);
 
@@ -172,6 +218,8 @@ export function setupFrame(doc = document) {
   const refresh = () => {
     if (!isOn()) {
       if (grid) untagAreas(doc);
+      top = null;
+      resize?.disconnect();
       grid = null;
       row = null;
       childCount = -1;
@@ -184,10 +232,13 @@ export function setupFrame(doc = document) {
     if (grid) {
       const changed = grid.children.length !== childCount;
       const noHeader = !grid.querySelector(`:scope > .${AREA_CLASSES.header}`);
-      if (changed || (noHeader && Date.now() - lastTag > 1000)) {
+      const lostTop = noHeader && (!top || !top.isConnected);
+      if (changed || (lostTop && Date.now() - lastTag > 1000)) {
         tagAreas(grid);
         childCount = grid.children.length;
         lastTag = Date.now();
+        const inside = grid.querySelector(`:scope > .${AREA_CLASSES.header}`);
+        setTop(inside ? null : findExternalHeader(grid));
       }
     }
     if (!row || !row.isConnected) {

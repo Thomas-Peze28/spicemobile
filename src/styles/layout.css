@@ -2,16 +2,25 @@
  * Layout : une seule colonne. frame.js repère la grille de mise en page de Spotify
  * (.sm-grid) et classe ses zones (.sm-area-*). De haut en bas :
  *   barre du haut / contenu / barre de lecture, puis la barre SpiceMobile (fixe).
+ * Si la barre du haut est hors de la grille, frame.js la marque .sm-top et mesure
+ * sa hauteur (--sm-top-h).
  */
 html.sm-on .sm-grid {
   display: grid !important;
   grid-template-columns: minmax(0, 1fr) !important;
   grid-template-rows: auto minmax(0, 1fr) auto !important;
   grid-template-areas: none !important;
-  width: 100% !important;
+  /* Fixée à l'écran : entre la barre du haut (si elle est hors de la grille) et la barre du bas. */
+  position: fixed !important;
+  top: var(--sm-top-h, 0px) !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: var(--sm-nav-h) !important;
+  width: auto !important;
   min-width: 0 !important;
-  height: calc(100dvh - var(--sm-nav-h)) !important;
-  max-height: calc(100dvh - var(--sm-nav-h)) !important;
+  height: auto !important;
+  max-height: none !important;
+  margin: 0 !important;
   padding: 0 !important;
   gap: 0 !important;
   overflow: hidden !important;
@@ -39,6 +48,18 @@ html.sm-on .sm-area-player {
   grid-row: 3 !important;
   width: auto !important;
   height: auto !important;
+}
+
+/* Barre du haut placée hors de la grille par Spotify. */
+html.sm-on .sm-top {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: auto !important;
+  min-width: 0 !important;
+  z-index: 100 !important;
+  background: #000 !important;
 }
 
 /* Bibliothèque : hors de la grille (le tiroir la positionne lui-même). */
