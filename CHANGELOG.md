@@ -7,6 +7,19 @@ et le projet respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [0.2.3] - 2026-11-20
+
+### Corrigé
+
+- Barre de lecture coupée sous la barre du bas et barre du haut de Spotify invisible :
+  la barre du haut est hors de la grille de mise en page. SpiceMobile la repère, la fixe
+  en haut de l'écran, et fixe la grille entre elle et la barre du bas.
+
+### Modifié
+
+- Le volume est de nouveau affiché, en version compacte, à droite du titre en cours.
+  Les boutons paroles, plein écran, mini-lecteur et « En cours de lecture » restent masqués.
+
 ## [0.2.2] - 2026-11-20
 
 ### Corrigé
@@ -71,7 +84,8 @@ Version initiale, distribuée hors GitHub Releases.
 - Swipe sur la barre de lecture : gauche = suivant, droite = précédent.
 - Bascule vue mobile / vue PC, mémorisée dans `localStorage`.
 
-[Unreleased]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.2...HEAD
+[Unreleased]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.3...HEAD
+[0.2.3]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/Thomas-Peze28/spicemobile/releases/tag/v0.2.0

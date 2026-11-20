@@ -95,17 +95,22 @@ export const SELECTORS = {
   volumeBar: {
     variants: ['[data-testid="volume-bar"]'],
     group: 'contextual',
-    description: 'Barre de volume (masquée)',
+    description: 'Barre de volume (affichée compacte)',
   },
   muteButton: {
     variants: ['[data-testid="volume-bar-toggle-mute-button"]'],
     group: 'contextual',
-    description: 'Bouton sourdine (masqué)',
+    description: 'Bouton sourdine',
   },
   npvButton: {
     variants: ['[data-testid="control-button-npv"]'],
     group: 'contextual',
     description: 'Bouton « En cours de lecture » (masqué)',
+  },
+  lyricsButton: {
+    variants: ['[data-testid="lyrics-button"]'],
+    group: 'contextual',
+    description: 'Bouton paroles (masqué)',
   },
   pipButton: {
     variants: ['[data-testid="pip-toggle-button"]'],
