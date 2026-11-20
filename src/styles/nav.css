@@ -1,0 +1,53 @@
+/* Barre de navigation SpiceMobile (en bas de l'écran). */
+#sm-nav {
+  display: none;
+}
+html.sm-on #sm-nav {
+  display: flex;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--sm-nav-h);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  box-sizing: border-box;
+  background: #000;
+  border-top: 1px solid #282828;
+  z-index: 9999;
+}
+#sm-nav button {
+  flex: 1;
+  background: none;
+  border: 0;
+  color: #b3b3b3;
+  font: 600 11px/1.2 system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+#sm-nav button .sm-icon {
+  font-size: 20px;
+}
+#sm-nav button.sm-active {
+  color: #fff;
+}
+
+/* Bouton flottant pour revenir en vue mobile depuis la vue PC. */
+#sm-fab {
+  position: fixed;
+  right: 12px;
+  bottom: 96px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 0;
+  background: #1ed760;
+  color: #000;
+  font: 700 12px system-ui, sans-serif;
+  z-index: 9999;
+}
+html.sm-on #sm-fab {
+  display: none;
+}

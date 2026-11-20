@@ -1,0 +1,16 @@
+/* Sidebar gauche (bibliothèque) transformée en tiroir plein écran. */
+html.sm-on .Root__nav-bar,
+html.sm-on #Desktop_LeftSidebar_Id {
+  display: none !important;
+}
+
+html.sm-on.sm-drawer-open .Root__nav-bar,
+html.sm-on.sm-drawer-open #Desktop_LeftSidebar_Id {
+  display: flex !important;
+  position: fixed !important;
+  inset: 0 0 var(--sm-nav-h) 0 !important;
+  width: 100vw !important;
+  max-width: none !important;
+  z-index: 9998 !important;
+  background: #121212 !important;
+}

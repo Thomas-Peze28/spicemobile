@@ -7,12 +7,32 @@
  */
 import { readFile } from 'node:fs/promises';
 import { networkInterfaces } from 'node:os';
+import { resolve } from 'node:path';
 import * as esbuild from 'esbuild';
 import { buildHeader } from './userscript-header.mjs';
 
 const pkg = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
 const watch = process.argv.includes('--watch');
 const DEV_PORT = Number(process.env.PORT) || 8000;
+
+/**
+ * Imports `fichier.css?raw` -> contenu texte (même convention que Vite/Vitest).
+ * @type {import('esbuild').Plugin}
+ */
+const rawPlugin = {
+  name: 'raw',
+  setup(build) {
+    build.onResolve({ filter: /\?raw$/ }, (args) => ({
+      path: resolve(args.resolveDir, args.path.replace(/\?raw$/, '')),
+      namespace: 'raw',
+    }));
+    build.onLoad({ filter: /.*/, namespace: 'raw' }, async (args) => ({
+      contents: await readFile(args.path, 'utf8'),
+      loader: 'text',
+      watchFiles: [args.path],
+    }));
+  },
+};
 
 /** @type {import('esbuild').BuildOptions} */
 const options = {
@@ -25,7 +45,7 @@ const options = {
   legalComments: 'none',
   // Pas de minification : un userscript doit rester lisible par qui l'installe.
   minify: false,
-  loader: { '.css': 'text' },
+  plugins: [rawPlugin],
   define: { __SM_VERSION__: JSON.stringify(pkg.version) },
   banner: { js: buildHeader(pkg) },
   logLevel: 'info',

@@ -1,0 +1,16 @@
+/* Variables et réglages globaux. Tout est actif uniquement sous html.sm-on. */
+:root {
+  --sm-nav-h: calc(56px + env(safe-area-inset-bottom, 0px));
+}
+html:not(.sm-on) {
+  --sm-nav-h: 0px;
+}
+
+html.sm-on,
+html.sm-on body {
+  min-width: 0 !important;
+  overflow-x: hidden !important;
+}
+html.sm-on body * {
+  -webkit-tap-highlight-color: transparent;
+}

@@ -1,0 +1,18 @@
+/* Layout : une seule colonne, à la largeur de l'écran. */
+html.sm-on .Root__top-container {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  height: calc(100dvh - var(--sm-nav-h)) !important;
+  padding: 0 !important;
+  gap: 0 !important;
+}
+html.sm-on .Root__main-view {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  border-radius: 0 !important;
+}
+html.sm-on .Root__right-sidebar {
+  display: none !important;
+}
