@@ -49,3 +49,55 @@ describe('isLibraryCollapsed', () => {
     expect(isLibraryCollapsed(null)).toBe(false);
   });
 });
+
+describe('classifyAreas', () => {
+  const html = `
+    <div id="grid">
+      <div id="top"><a href="/">Accueil</a></div>
+      <nav id="Desktop_LeftSidebar_Id"></nav>
+      <div id="resizer"></div>
+      <div id="main"><section>contenu</section></div>
+      <div id="right"><div id="Desktop_PanelContainer_Id"></div></div>
+      <div id="bar"><button data-testid="control-button-playpause"></button></div>
+    </div>`;
+  /** Géométrie factice (jsdom ne calcule pas de layout). */
+  const rects = {
+    top: { top: 0, width: 400, height: 64 },
+    resizer: { top: 64, width: 8, height: 700 },
+    main: { top: 64, width: 120, height: 700 },
+  };
+  const rect = (el) => rects[el.id] ?? { top: 0, width: 0, height: 0 };
+
+  it('reconnaît chaque zone', async () => {
+    const { classifyAreas } = await import('../src/frame.js');
+    document.body.innerHTML = html;
+    const roles = classifyAreas(document.getElementById('grid'), rect);
+    const byId = Object.fromEntries([...roles].map(([el, role]) => [el.id, role]));
+    expect(byId).toEqual({
+      top: 'header',
+      Desktop_LeftSidebar_Id: 'left',
+      resizer: 'hidden',
+      main: 'main',
+      right: 'hidden',
+      bar: 'player',
+    });
+  });
+
+  it('préfère <main> à la plus grande zone', async () => {
+    const { classifyAreas } = await import('../src/frame.js');
+    document.body.innerHTML = `<div id="g"><div id="a"></div><div id="b"><main></main></div></div>`;
+    const big = (el) => (el.id === 'a' ? { top: 100, width: 999, height: 999 } : rect(el));
+    const roles = classifyAreas(document.getElementById('g'), big);
+    expect(roles.get(document.getElementById('b'))).toBe('main');
+    expect(roles.get(document.getElementById('a'))).toBe('hidden');
+  });
+
+  it('tagAreas pose les classes', async () => {
+    const { tagAreas } = await import('../src/frame.js');
+    document.body.innerHTML = html;
+    tagAreas(document.getElementById('grid'), rect);
+    expect(document.getElementById('grid').classList.contains('sm-grid')).toBe(true);
+    expect(document.getElementById('main').className).toBe('sm-area-main');
+    expect(document.getElementById('right').className).toBe('sm-area-hidden');
+  });
+});

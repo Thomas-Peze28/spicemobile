@@ -7,6 +7,15 @@ et le projet respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-11-20
+
+### Corrigé
+
+- Vue mobile toujours en colonnes (contenu écrasé à gauche, barre de lecture coupée) :
+  Spotify n'utilise plus les classes `Root__*`. SpiceMobile repère maintenant la grille
+  de mise en page à partir de la bibliothèque, classe ses zones d'après leur contenu
+  et les réempile en une seule colonne.
+
 ## [0.2.1] - 2026-11-20
 
 ### Corrigé
@@ -62,6 +71,7 @@ Version initiale, distribuée hors GitHub Releases.
 - Swipe sur la barre de lecture : gauche = suivant, droite = précédent.
 - Bascule vue mobile / vue PC, mémorisée dans `localStorage`.
 
-[Unreleased]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.2...HEAD
+[0.2.2]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/Thomas-Peze28/spicemobile/releases/tag/v0.2.0

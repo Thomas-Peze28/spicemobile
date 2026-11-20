@@ -1,9 +1,6 @@
 /* Variables et réglages globaux. Tout est actif uniquement sous html.sm-on. */
 :root {
   --sm-nav-h: calc(56px + env(safe-area-inset-bottom, 0px));
-  /* Mesurées par frame.js (valeurs de secours avant la mesure). */
-  --sm-top-h: 64px;
-  --sm-player-h: 0px;
   --sm-bg: #121212;
 }
 html:not(.sm-on) {
