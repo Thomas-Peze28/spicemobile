@@ -1,15 +1,3 @@
-// ==UserScript==
-// @name         SpiceMobile
-// @namespace    https://github.com/VOTRE_PSEUDO/spicemobile
-// @version      0.1.0
-// @description  Interface mobile pour le lecteur web Spotify : sidebar en tiroir, barre de navigation en bas, gros boutons, swipe pour changer de titre.
-// @match        https://open.spotify.com/*
-// @run-at       document-start
-// @grant        none
-// @updateURL    https://raw.githubusercontent.com/VOTRE_PSEUDO/spicemobile/main/spicemobile.user.js
-// @downloadURL  https://raw.githubusercontent.com/VOTRE_PSEUDO/spicemobile/main/spicemobile.user.js
-// ==/UserScript==
-
 (() => {
   'use strict';
 

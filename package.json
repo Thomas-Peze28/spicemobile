@@ -1,0 +1,31 @@
+{
+  "name": "spicemobile",
+  "version": "0.2.0",
+  "description": "Interface mobile pour le lecteur web Spotify : layout une colonne, bibliothèque en tiroir, barre de navigation en bas, gros boutons, swipe pour changer de titre.",
+  "license": "MIT",
+  "author": "Peze Thomas",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "userscript": {
+    "name": "SpiceMobile",
+    "githubUser": "VOTRE_PSEUDO",
+    "repo": "spicemobile",
+    "match": [
+      "https://open.spotify.com/*"
+    ],
+    "runAt": "document-start",
+    "grant": [
+      "none"
+    ]
+  },
+  "scripts": {
+    "dev": "node scripts/build.mjs --watch",
+    "build": "node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}
