@@ -49,5 +49,5 @@ Version initiale, distribuée hors GitHub Releases.
 - Swipe sur la barre de lecture : gauche = suivant, droite = précédent.
 - Bascule vue mobile / vue PC, mémorisée dans `localStorage`.
 
-[Unreleased]: https://github.com/VOTRE_PSEUDO/spicemobile/compare/v0.2.0...HEAD
-[0.2.0]: https://github.com/VOTRE_PSEUDO/spicemobile/releases/tag/v0.2.0
+[Unreleased]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/Thomas-Peze28/spicemobile/releases/tag/v0.2.0

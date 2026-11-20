@@ -11,7 +11,7 @@
   },
   "userscript": {
     "name": "SpiceMobile",
-    "githubUser": "VOTRE_PSEUDO",
+    "githubUser": "Thomas-Peze28",
     "repo": "spicemobile",
     "match": [
       "https://open.spotify.com/*"

@@ -1,7 +1,7 @@
 # SpiceMobile
 
-[![CI](https://github.com/VOTRE_PSEUDO/spicemobile/actions/workflows/ci.yml/badge.svg)](https://github.com/VOTRE_PSEUDO/spicemobile/actions/workflows/ci.yml)
-[![Dernière version](https://img.shields.io/github/v/release/VOTRE_PSEUDO/spicemobile)](https://github.com/VOTRE_PSEUDO/spicemobile/releases/latest)
+[![CI](https://github.com/Thomas-Peze28/spicemobile/actions/workflows/ci.yml/badge.svg)](https://github.com/Thomas-Peze28/spicemobile/actions/workflows/ci.yml)
+[![Dernière version](https://img.shields.io/github/v/release/Thomas-Peze28/spicemobile)](https://github.com/Thomas-Peze28/spicemobile/releases/latest)
 [![Licence MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
 
 Un « Spicetify mobile » : un userscript qui rend le lecteur web Spotify (`open.spotify.com`)
@@ -56,7 +56,7 @@ et ne contourne aucun DRM.
 3. **Tampermonkey** : même chemin, cherche « Tampermonkey », puis **Ajouter à Firefox**.
    Violentmonkey fonctionne aussi.
 4. **SpiceMobile** : ouvre ce lien dans Firefox :
-   <https://github.com/VOTRE_PSEUDO/spicemobile/releases/latest/download/spicemobile.user.js>.
+   <https://github.com/Thomas-Peze28/spicemobile/releases/latest/download/spicemobile.user.js>.
    Tampermonkey affiche la page d'installation : appuie sur **Installer**.
 5. **Connexion** : ouvre <https://open.spotify.com> et connecte-toi.
 6. **DRM** : la première lecture déclenche une demande d'autorisation du contenu protégé par DRM
