@@ -10,6 +10,7 @@ import { onDomReady } from './dom.js';
 import { setupDrawer } from './drawer.js';
 import { EVENTS, on } from './events.js';
 import { setupFrame } from './frame.js';
+import { setupKeepAlive } from './keepalive.js';
 import { runHealthCheck } from './health.js';
 import { patchHistory } from './history.js';
 import { log } from './log.js';
@@ -33,6 +34,7 @@ function init() {
   injectStyle();
   patchHistory();
   setupSwipe();
+  const keepAlive = setupKeepAlive();
 
   onDomReady(() => {
     injectStyle(); // Spotify a pu remplacer le <head> entre-temps
@@ -45,7 +47,7 @@ function init() {
     buildNav();
     buildFab();
     updateActive();
-    exposeApi();
+    exposeApi({ keepAlive });
     log(`v${VERSION} prête`);
     if (isDebug()) runHealthCheck();
   });

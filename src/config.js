@@ -13,6 +13,8 @@ export const CONFIG = Object.freeze({
   drawerCloseDelay: 150,
   /** Délai max (ms) d'attente du rendu de Spotify avant le health check. */
   healthCheckTimeout: 15000,
+  /** Maintien en arrière-plan : délai (ms) après la dernière lecture avant de s'arrêter. */
+  keepAliveGrace: 60000,
   /** Valeur par défaut du mode debug (surchargée par localStorage). */
   debug: false,
 });
@@ -20,6 +22,7 @@ export const CONFIG = Object.freeze({
 export const STORAGE_KEYS = Object.freeze({
   enabled: 'spicemobile:enabled',
   debug: 'spicemobile:debug',
+  keepAlive: 'spicemobile:keepalive',
 });
 
 export const MOBILE_VIEWPORT = 'width=device-width, initial-scale=1, viewport-fit=cover';

@@ -7,6 +7,16 @@ et le projet respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-23
+
+### Ajouté
+
+- Maintien de la lecture écran éteint : sur Firefox Android, le titre suivant se coupait
+  après ses premières secondes. Entre deux titres, Firefox considère l'onglet comme muet et
+  le ralentit, et Spotify ne télécharge plus la suite. SpiceMobile joue maintenant en boucle
+  un son inaudible (20 Hz, -54 dB) tant que Spotify joue, et jusqu'à 60 s après une pause.
+  Désactivable : `SpiceMobile.keepAlive(false)` ou `localStorage['spicemobile:keepalive'] = '0'`.
+
 ## [0.2.7] - 2026-11-20
 
 ### Modifié
@@ -128,7 +138,8 @@ Version initiale, distribuée hors GitHub Releases.
 - Swipe sur la barre de lecture : gauche = suivant, droite = précédent.
 - Bascule vue mobile / vue PC, mémorisée dans `localStorage`.
 
-[Unreleased]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.7...HEAD
+[Unreleased]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.7...v0.3.0
 [0.2.7]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.6...v0.2.7
 [0.2.6]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.5...v0.2.6
 [0.2.5]: https://github.com/Thomas-Peze28/spicemobile/compare/v0.2.4...v0.2.5
