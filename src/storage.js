@@ -62,3 +62,7 @@ export const saveEnabled = (on, store) => writeFlag(STORAGE_KEYS.enabled, on, st
 /** Mode debug ? Activable sans rebuild : localStorage['spicemobile:debug'] = '1'. */
 export const isDebug = (store) => readFlag(STORAGE_KEYS.debug, CONFIG.debug, store);
 export const saveDebug = (on, store) => writeFlag(STORAGE_KEYS.debug, on, store);
+
+/** Maintien de la lecture écran éteint (son inaudible) ? (oui par défaut) */
+export const isKeepAlive = (store) => readFlag(STORAGE_KEYS.keepAlive, true, store);
+export const saveKeepAlive = (on, store) => writeFlag(STORAGE_KEYS.keepAlive, on, store);

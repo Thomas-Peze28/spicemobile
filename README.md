@@ -40,6 +40,10 @@ SpiceMobile ne touche pas à ça : son seul rôle est l'**interface mobile**.
   vers la droite pour le précédent. La barre de progression reste utilisable.
 - **Bascule vue mobile / vue PC**, mémorisée d'une visite à l'autre.
   En vue PC, un bouton vert « Mob » permet de revenir en vue mobile.
+- **Lecture écran éteint** : entre deux titres, Firefox peut mettre l'onglet en pause et couper
+  le son du titre suivant après quelques secondes. SpiceMobile joue en boucle un son inaudible
+  (20 Hz, très faible) pendant la lecture pour garder l'onglet actif. Désactivable dans la console :
+  `SpiceMobile.keepAlive(false)`.
 - **Diagnostic** : appui long sur « Vue PC » pour afficher et copier la structure de la page,
   à joindre à un ticket quand l'interface casse.
 - **Health check** des sélecteurs en mode debug, pour repérer vite ce qui a cassé
@@ -69,6 +73,8 @@ et ne contourne aucun DRM.
 8. **Lecture en arrière-plan** : Paramètres Android > **Applications** > **Firefox** > **Batterie** >
    **Non restreinte**. Sans ça, Android peut couper la musique écran éteint.
    Le chemin exact varie selon la surcouche (One UI, MIUI…).
+   Sur Samsung, ajoute aussi Firefox aux **Applis jamais mises en veille**
+   (Batterie > Limites d'utilisation en arrière-plan).
 
 ### Mises à jour
 
